@@ -1,0 +1,15 @@
+λ-calculator
+
+A simple substitutional interpreter for the untyped call-by-name λ-calculus.
+
+The interpreter keeps track of variable names and does full α-conversion, so it
+can output many λ-terms that traditional functional interpreters cannot. For
+example, in most Schemes, a partially-applied function would evaluate to an
+unprintable value, represented in the REPL by a placeholder string like
+#<procedure>. Instead, in λ-calculator, the abstract syntax tree is actually
+un-parsed and printed, and the user sees the partially-applied function in the
+same syntax that is used for input.
+
+There is currently no parser, so λ-terms must be written from scratch as ASTs
+in the source language (see ast.scm). To reduce a term, use reduce (from
+reduce.scm), and to print it to a string, use term->string (from print.scm).
