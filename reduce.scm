@@ -50,7 +50,7 @@
     (body (left redex))
     (right redex)))
 
-; Result of β-reducing leftmost-outermost redex of term; #f if term is in
+; Result of β-reducing leftmost-outermost redex of term, or #f if term is in
 ; normal form
 (define (beta-lftmos term)
   (cond
