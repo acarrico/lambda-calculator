@@ -7,9 +7,7 @@
   (null? set))
 
 (define (elem? x set)
-  (if (member x set)
-    #t
-    #f))
+  (member x set))
 
 (define (union a b)
  (append a (difference b a)))
