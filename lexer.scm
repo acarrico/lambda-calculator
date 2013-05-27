@@ -1,4 +1,4 @@
-(define (terminal? char)
+(define (terminal char)
   (case char
     [#\λ 'lam]
     [#\. 'dot]
@@ -13,7 +13,7 @@
     (if (or
           (null? clst)
           (char-whitespace? (car clst))
-          (terminal? (car clst)))
+          (terminal (car clst)))
       (cons
         (cons 'name acc)
         (charlst->toklst clst))
@@ -21,8 +21,8 @@
   (cond
     [(null? clst) '()]
     [(char-whitespace? (car clst)) (charlst->toklst (cdr clst))]
-    [(terminal? (car clst)) (cons
-                              (terminal? (car clst))
+    [(terminal (car clst)) (cons
+                              (terminal (car clst))
                               (charlst->toklst (cdr clst)))]
     [else (name-helper "" clst)]))
 
