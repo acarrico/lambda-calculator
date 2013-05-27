@@ -8,16 +8,15 @@
 (define (next-string str)
   (case str
     ["" "a"]
-    [else
-     (let* ([lst (reverse (string->list str))]
-            [head (car lst)])
-      (list->string
-        (reverse
-          (case head
-            [#\z
-             (cons #\a lst)]
-            [else
-             (cons (next-char head) (cdr lst))]))))]))
+    [else (let* ([rev-clst (reverse (string->list str))])
+            (list->string (reverse
+              (case (car rev-clst)
+                [#\z (cons
+                       #\a
+                       rev-clst)]
+                [else (cons
+                        (next-char (car rev-clst))
+                        (cdr rev-clst))]))))]))
 
 (define (new-name taken)
   (let ([result (next-string "")])
