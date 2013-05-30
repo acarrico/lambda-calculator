@@ -17,20 +17,20 @@
   (string-append "λ " (param-helper abst)))
 
 (define (appl->string appl)
-  (define (helper lftmost? rtmost? term)
+  (define (paren-helper lftmost? rtmost? term)
     (cond
       [(var? term) (var->string term)]
       [(abst? term) (if rtmost?
                       (abst->string term)
                       (paren (abst->string term)))]
       [(appl? term) (let ([result (string-append
-                                    (helper lftmost? #f (left term))
+                                    (paren-helper lftmost? #f (left term))
                                     " "
-                                    (helper #f rtmost? (right term)))])
+                                    (paren-helper #f rtmost? (right term)))])
                       (if lftmost?
                         result
                         (paren result)))]))
-  (helper #t #t appl))
+  (paren-helper #t #t appl))
 
 (define (term->string term)
   (cond
