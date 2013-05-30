@@ -15,7 +15,7 @@
           (char-whitespace? (car clst))
           (terminal (car clst)))
       (cons
-        (cons 'name acc)
+        acc
         (charlst->toklst clst))
       (name-helper (string-append acc (string (car clst))) (cdr clst))))
   (cond
