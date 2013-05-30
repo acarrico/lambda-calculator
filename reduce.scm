@@ -50,36 +50,30 @@
     (body (left redex))
     (right redex)))
 
-; Result of β-reducing leftmost-outermost redex of term, or #f if term is in
-; normal form
-(define (beta-lftmos term)
-  (cond
-    [(var? term) #f]
-    [(abst? term) (let ([body-result (beta-lftmos (body term))])
-                    (if body-result
-                      (make-abst
-                        (param term)
-                        body-result)
-                      #f))]
-    [(appl? term) (if (redex? term)
-                    (beta term)
-                    (let ([left-result (beta-lftmos (left term))]
-                          [right-result (delay (beta-lftmos (right term)))])
-                      (cond
-                        [left-result
-                         (make-appl
-                           left-result
-                           (right term))]
-                        [(force right-result)
-                         (make-appl
-                           (left term)
-                           (force right-result))]
-                        [else
-                         #f])))]))
-
 ; Normal form of term, if one exists; otherwise does not terminate
 (define (reduce term)
-  (let ([result (beta-lftmos term)])
+  (define (lftmos-helper term)
+    (cond
+      [(var? term) #f]
+      [(abst? term) (let ([body-result (lftmos-helper (body term))])
+                      (if body-result
+                        (make-abst
+                          (param term)
+                          body-result)
+                        #f))]
+      [(appl? term) (if (redex? term)
+                      (beta term)
+                      (let ([left-result (lftmos-helper (left term))]
+                            [right-result (delay (lftmos-helper (right term)))])
+                        (cond
+                          [left-result (make-appl
+                                         left-result
+                                         (right term))]
+                          [(force right-result) (make-appl
+                                                  (left term)
+                                                  (force right-result))]
+                          [else #f])))]))
+  (let ([result (lftmos-helper term)])
     (if result
       (reduce result)
       term)))
