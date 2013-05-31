@@ -63,12 +63,12 @@
                         #f))]
       [(appl? term) (if (redex? term)
                       (beta term)
-                      (let ([left-result (lftmos-helper (left term))]
+                      (let ([left-result (delay (lftmos-helper (left term)))]
                             [right-result (delay (lftmos-helper (right term)))])
                         (cond
-                          [left-result (make-appl
-                                         left-result
-                                         (right term))]
+                          [(force left-result) (make-appl
+                                                 (force left-result)
+                                                 (right term))]
                           [(force right-result) (make-appl
                                                   (left term)
                                                   (force right-result))]
