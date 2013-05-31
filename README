@@ -1,6 +1,6 @@
-λ-calculator
+lambda-calculator
 
-A simple substitutional interpreter for the untyped call-by-name λ-calculus.
+A substitutional interpreter for the untyped call-by-name λ-calculus.
 
 The interpreter keeps track of variable names and does full α-conversion, so it
 can output many λ-terms that traditional functional interpreters cannot. For
