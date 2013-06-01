@@ -1,28 +1,32 @@
 (load "set.scm")
 
+(define low-char #\a)
+(define hi-char #\z)
+
 (define (next-char c)
-  (case c
-    [#\z #\a]
-    [else (integer->char (+ (char->integer c) 1))]))
+  (integer->char (+ (char->integer c) 1)))
+
+(define (seed-string len)
+  (if (= len 1)
+    (string low-char)
+    (string-append (seed-string 1) (seed-string (- len 1)))))
 
 (define (next-string str)
-  (case str
-    ["" "a"]
-    [else (let* ([rev-clst (reverse (string->list str))])
-            (list->string (reverse
-              (case (car rev-clst)
-                [#\z (cons
-                       #\a
-                       rev-clst)]
-                [else (cons
-                        (next-char (car rev-clst))
-                        (cdr rev-clst))]))))]))
+  (let* ([len (string-length str)]
+         [last-index (- len 1)]
+         [last-char (string-ref str last-index)])
+    (if (char=? last-char hi-char)
+      (seed-string (+ len 1))
+      (string-append
+        (substring str 0 last-index)
+        (string (next-char last-char))))))
 
 (define (new-name taken)
-  (let ([result (next-string "")])
-    (if (not (elem? result taken))
-      result
-      (new-name (union taken (make-set result))))))
+  (define (helper current)
+    (if (not (elem? current taken))
+      current
+      (helper (next-string current))))
+  (helper (seed-string 1)))
 
 (define (new-var taken)
   (make-var
