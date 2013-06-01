@@ -1,3 +1,5 @@
+(load "error.scm")
+
 (define (terminal char)
   (case char
     [#\λ 'lam]
@@ -8,6 +10,11 @@
     [#\] 'csquare]
     [else #f]))
 
+(define (name-char? char)
+  (or
+    (char-alphabetic? char)
+    (char-numeric? char)))
+
 (define (charlst->toklst clst)
   (define (name-helper acc clst)
     (if (or
@@ -17,7 +24,9 @@
       (cons
         acc
         (charlst->toklst clst))
-      (name-helper (string-append acc (string (car clst))) (cdr clst))))
+      (if (name-char? (car clst))
+        (name-helper (string-append acc (string (car clst))) (cdr clst))
+        (error "Invalid character in variable name."))))
   (cond
     [(null? clst) '()]
     [(char-whitespace? (car clst)) (charlst->toklst (cdr clst))]
