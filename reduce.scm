@@ -2,19 +2,19 @@
 (load "set.scm")
 (load "rename.scm")
 
-; Set of free variables of term
-(define (fv term)
+; Set of free variables of expr
+(define (fv expr)
   (cond
-    [(var? term) (make-set term)]
-    [(abst? term) (difference
-                    (fv (body term))
-                    (make-set (param term)))]
-    [(appl? term) (union
-                    (fv (left term))
-                    (fv (right term)))]))
+    [(var? expr) (make-set expr)]
+    [(abst? expr) (difference
+                    (fv (body expr))
+                    (make-set (param expr)))]
+    [(appl? expr) (union
+                    (fv (left expr))
+                    (fv (right expr)))]))
 
-; Capture-avoiding substitution of term N for free occurrences of variable x in
-; term M
+; Capture-avoiding substitution of expression N for free occurrences of
+; variable x in expression M
 (define (sub x M N)
   (cond
     [(var? M) (if (equal? M x)
@@ -36,44 +36,44 @@
                  (sub x (left M) N)
                  (sub x (right M) N))]))
 
-; Whether or not term is a redex
-(define (redex? term)
+; Whether or not expr is a redex
+(define (redex? expr)
   (cond
-    [(var? term) #f]
-    [(abst? term) #f]
-    [(appl? term) (abst? (left term))]))
+    [(var? expr) #f]
+    [(abst? expr) #f]
+    [(appl? expr) (abst? (left expr))]))
 
-; Immediate β-reduct of redex
+; β-reduct of redex
 (define (beta redex)
   (sub
     (param (left redex))
     (body (left redex))
     (right redex)))
 
-; Normal form of term, if one exists; otherwise does not terminate
-(define (reduce term)
-  (define (lftmos-helper term)
+; Normal form of expr, if one exists; otherwise does not terminate
+(define (reduce expr)
+  (define (lftmos-helper expr)
     (cond
-      [(var? term) #f]
-      [(abst? term) (let ([body-result (lftmos-helper (body term))])
+      [(var? expr) #f]
+      [(abst? expr) (let ([body-result (lftmos-helper (body expr))])
                       (if body-result
                         (make-abst
-                          (param term)
+                          (param expr)
                           body-result)
                         #f))]
-      [(appl? term) (if (redex? term)
-                      (beta term)
-                      (let ([left-result (delay (lftmos-helper (left term)))]
-                            [right-result (delay (lftmos-helper (right term)))])
+      [(appl? expr) (if (redex? expr)
+                      (beta expr)
+                      (let ([left-result (delay (lftmos-helper (left expr)))]
+                            [right-result (delay (lftmos-helper (right expr)))])
                         (cond
                           [(force left-result) (make-appl
                                                  (force left-result)
-                                                 (right term))]
+                                                 (right expr))]
                           [(force right-result) (make-appl
-                                                  (left term)
+                                                  (left expr)
                                                   (force right-result))]
                           [else #f])))]))
-  (let ([result (lftmos-helper term)])
+  (let ([result (lftmos-helper expr)])
     (if result
       (reduce result)
-      term)))
+      expr)))

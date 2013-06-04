@@ -10,12 +10,12 @@
     [#\] 'csquare]
     [else #f]))
 
-(define (name-char? char)
+(define (legal? char)
   (or
     (char-alphabetic? char)
     (char-numeric? char)))
 
-(define (charlst->toklst clst)
+(define (tokenize clst)
   (define (name-helper acc clst)
     (if (or
           (null? clst)
@@ -23,17 +23,14 @@
           (terminal (car clst)))
       (cons
         acc
-        (charlst->toklst clst))
-      (if (name-char? (car clst))
+        (tokenize clst))
+      (if (legal? (car clst))
         (name-helper (string-append acc (string (car clst))) (cdr clst))
         (error "Invalid character in variable name."))))
   (cond
     [(null? clst) '()]
-    [(char-whitespace? (car clst)) (charlst->toklst (cdr clst))]
+    [(char-whitespace? (car clst)) (tokenize (cdr clst))]
     [(terminal (car clst)) (cons
                               (terminal (car clst))
-                              (charlst->toklst (cdr clst)))]
+                              (tokenize (cdr clst)))]
     [else (name-helper "" clst)]))
-
-(define (tokenize str)
-  (charlst->toklst (string->list str)))

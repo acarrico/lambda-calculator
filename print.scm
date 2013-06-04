@@ -1,39 +1,39 @@
 (load "ast.scm")
 
-(define (paren str)
+(define (parenthesize str)
   (string-append "(" str ")"))
 
-(define (var->string var)
+(define (print-var var)
   (name var))
 
-(define (abst->string abst)
-  (define (param-helper term)
+(define (print-abst abst)
+  (define (param-helper expr)
     (string-append
-      (var->string (param term))
+      (print-var (param expr))
       " "
-      (if (abst? (body term))
-        (param-helper (body term))
-        (string-append ". " (term->string (body term))))))
+      (if (abst? (body expr))
+        (param-helper (body expr))
+        (string-append ". " (print (body expr))))))
   (string-append "λ " (param-helper abst)))
 
-(define (appl->string appl)
-  (define (paren-helper lftmost? rtmost? term)
+(define (print-appl appl)
+  (define (paren-helper lftmost? rtmost? expr)
     (cond
-      [(var? term) (var->string term)]
-      [(abst? term) (if rtmost?
-                      (abst->string term)
-                      (paren (abst->string term)))]
-      [(appl? term) (let ([result (string-append
-                                    (paren-helper lftmost? #f (left term))
+      [(var? expr) (print-var expr)]
+      [(abst? expr) (if rtmost?
+                      (print-abst expr)
+                      (parenthesize (print-abst expr)))]
+      [(appl? expr) (let ([result (string-append
+                                    (paren-helper lftmost? #f (left expr))
                                     " "
-                                    (paren-helper #f rtmost? (right term)))])
+                                    (paren-helper #f rtmost? (right expr)))])
                       (if lftmost?
                         result
-                        (paren result)))]))
+                        (parenthesize result)))]))
   (paren-helper #t #t appl))
 
-(define (term->string term)
+(define (print expr)
   (cond
-    [(var? term) (var->string term)]
-    [(abst? term) (abst->string term)]
-    [(appl? term) (appl->string term)]))
+    [(var? expr) (print-var expr)]
+    [(abst? expr) (print-abst expr)]
+    [(appl? expr) (print-appl expr)]))

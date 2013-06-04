@@ -12,4 +12,4 @@ same syntax that is used for input.
 
 There is currently no parser, so λ-terms must be written from scratch as ASTs
 in the source language (see ast.scm). To reduce a term, use reduce (from
-reduce.scm), and to print it to a string, use term->string (from print.scm).
+reduce.scm), and to print it to a string, use print (from print.scm).

@@ -3,8 +3,8 @@
 (define (make-var name)
   (cons 'var name))
 
-(define (var? term)
-  (eqv? (car term) 'var))
+(define (var? expr)
+  (eqv? (car expr) 'var))
 
 (define (name var)
   (cdr var))
@@ -14,8 +14,8 @@
 (define (make-abst param body)
   (cons 'abst (cons param body)))
 
-(define (abst? term)
-  (eqv? (car term) 'abst))
+(define (abst? expr)
+  (eqv? (car expr) 'abst))
 
 (define (param abst)
   (cadr abst))
@@ -28,8 +28,8 @@
 (define (make-appl left right)
   (cons 'appl (cons left right)))
 
-(define (appl? term)
-  (eqv? (car term) 'appl))
+(define (appl? expr)
+  (eqv? (car expr) 'appl))
 
 (define (left appl)
   (cadr appl))
