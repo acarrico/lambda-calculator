@@ -7,12 +7,10 @@
 
   (define (terminal char)
     (case char
-      [(#\λ) 'lam]
+      [(#\λ #\\) 'lam]
       [(#\.) 'dot]
       [(#\() 'oparen]
       [(#\)) 'cparen]
-      [(#\[) 'osquare]
-      [(#\]) 'csquare]
       [else #f]))
 
   (define (legal? char)
