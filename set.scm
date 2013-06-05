@@ -1,19 +1,30 @@
-(define empty '())
+(library (set)
+  (export
+    empty
+    make-set
+    empty? elem?
+    union difference
+    set-map)
+  (import
+    (rnrs base)
+    (rnrs lists))
 
-(define (make-set x . xs)
-  (cons x xs))
+  (define empty '())
 
-(define (empty? set)
-  (null? set))
+  (define (make-set x . xs)
+    (cons x xs))
 
-(define (elem? x set)
-  (member x set))
+  (define (empty? set)
+    (null? set))
 
-(define (union a b)
- (append a (difference b a)))
+  (define (elem? x set)
+    (member x set))
 
-(define (difference a b)
-  (remp (lambda (x) (elem? x b)) a))
+  (define (union a b)
+   (append a (difference b a)))
 
-(define (set-map f set)
-  (map f set))
+  (define (difference a b)
+    (remp (lambda (x) (elem? x b)) a))
+
+  (define (set-map f set)
+    (map f set)))

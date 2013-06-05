@@ -1,38 +1,45 @@
-; Variable
+(library (ast)
+  (export
+    make-var var? name
+    make-abst abst? param body
+    make-appl appl? left right)
+  (import (rnrs base))
 
-(define (make-var name)
-  (cons 'var name))
+  ; Variable
 
-(define (var? expr)
-  (eqv? (car expr) 'var))
+  (define (make-var name)
+    (cons 'var name))
 
-(define (name var)
-  (cdr var))
+  (define (var? expr)
+    (eqv? (car expr) 'var))
 
-; Abstraction
+  (define (name var)
+    (cdr var))
 
-(define (make-abst param body)
-  (cons 'abst (cons param body)))
+  ; Abstraction
 
-(define (abst? expr)
-  (eqv? (car expr) 'abst))
+  (define (make-abst param body)
+    (cons 'abst (cons param body)))
 
-(define (param abst)
-  (cadr abst))
+  (define (abst? expr)
+    (eqv? (car expr) 'abst))
 
-(define (body abst)
-  (cddr abst))
+  (define (param abst)
+    (cadr abst))
 
-; Application
+  (define (body abst)
+    (cddr abst))
 
-(define (make-appl left right)
-  (cons 'appl (cons left right)))
+  ; Application
 
-(define (appl? expr)
-  (eqv? (car expr) 'appl))
+  (define (make-appl left right)
+    (cons 'appl (cons left right)))
 
-(define (left appl)
-  (cadr appl))
+  (define (appl? expr)
+    (eqv? (car expr) 'appl))
 
-(define (right appl)
-  (cddr appl))
+  (define (left appl)
+    (cadr appl))
+
+  (define (right appl)
+    (cddr appl)))
