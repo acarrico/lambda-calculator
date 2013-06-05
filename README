@@ -10,6 +10,9 @@ unprintable value, represented in the REPL by a placeholder string like
 un-parsed and printed, and the user sees the partially-applied function in the
 same syntax that is used for input.
 
-There is currently no parser, so λ-terms must be written from scratch as ASTs
-in the source language (see ast.scm). To reduce a term, use reduce (from
-reduce.scm), and to print it to a string, use print (from print.scm).
+There is currently no REPL, so you must write your programs as strings and call
+them like this:
+
+(print (reduce (parse (tokenize (string->list "YOUR PROGRAM HERE")))))
+
+Good luck!
