@@ -1,5 +1,7 @@
 (library (reduce)
-  (export reduce)
+  (export
+    reduce-norm
+    reduce-applic)
   (import
     (rnrs base)
     (rnrs r5rs)
@@ -57,7 +59,7 @@
       (right redex)))
 
   ; Normal form of expr, if one exists; otherwise does not terminate
-  (define (reduce expr)
+  (define (reduce-norm expr)
     (define (lftmos-helper expr)
       (cond
         [(var? expr) #f]
@@ -81,5 +83,33 @@
                             [else #f])))]))
     (let ([result (lftmos-helper expr)])
       (if result
-        (reduce result)
+        (reduce-norm result)
+        expr)))
+
+  (define (reduce-applic expr)
+    (define (rtmos-helper expr)
+      (cond
+        [(var? expr) #f]
+        [(abst? expr) (let ([body-result (rtmos-helper (body expr))])
+                        (if body-result
+                          (make-abst
+                            (param expr)
+                            body-result)
+                          #f))]
+        [(appl? expr) (if (redex? expr)
+                        (beta expr)
+                        (let ([left-result (delay (rtmos-helper (left expr)))]
+                              [right-result (delay (rtmos-helper (right
+                                                                    expr)))])
+                          (cond
+                            [(force right-result) (make-appl
+                                                    (left expr)
+                                                    (force right-result))]
+                            [(force left-result) (make-appl
+                                                   (force left-result)
+                                                   (right expr))]
+                            [else #f])))]))
+    (let ([result (rtmos-helper expr)])
+      (if result
+        (reduce-applic result)
         expr))))
