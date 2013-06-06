@@ -16,7 +16,13 @@
   (define (legal? char)
     (or
       (char-alphabetic? char)
-      (char-numeric? char)))
+      (char-numeric? char)
+      (char=? char #\-)
+      (char=? char #\_)
+      (char=? char #\?)
+      (char=? char #\+)
+      (char=? char #\*)
+      (char=? char #\^)))
 
   (define (tokenize clst)
     (define (name-helper acc clst)
