@@ -2,7 +2,7 @@
   (export new-name)
   (import
     (rnrs base)
-    (set))
+    (lambda-calculator set))
 
   (define low-char #\a)
   (define hi-char #\z)

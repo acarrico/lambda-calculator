@@ -1,3 +1,5 @@
+#!r6rs
+
 ; DISCLAIMER
 ;
 ; This parser works, but it was written in a time crunch and it needs to be
@@ -9,8 +11,8 @@
     (rnrs base)
     (rnrs r5rs)
     (rnrs lists)
-    (fail)
-    (ast))
+    (lambda-calculator fail)
+    (lambda-calculator ast))
 
   ; State-passing struct
 

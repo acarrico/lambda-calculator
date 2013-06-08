@@ -1,3 +1,5 @@
+#!r6rs
+
 (library (reduce)
   (export
     reduce-norm
@@ -5,9 +7,9 @@
   (import
     (rnrs base)
     (rnrs r5rs)
-    (ast)
-    (set)
-    (rename))
+    (lambda-calculator ast)
+    (lambda-calculator set)
+    (lambda-calculator rename))
 
   ; Set of free variables of expr
   (define (fv expr)

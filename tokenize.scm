@@ -1,9 +1,11 @@
+#!r6rs
+
 (library (tokenize)
   (export tokenize)
   (import
     (rnrs base)
     (rnrs unicode)
-    (fail))
+    (lambda-calculator fail))
 
   (define (terminal char)
     (case char
