@@ -1,6 +1,10 @@
 #!r6rs
 
 (import
+  (rnrs io simple)
+  (rnrs io ports)
+  (rnrs base)
+  (rnrs programs)
   (lambda-calculator tokenize)
   (lambda-calculator parse)
   (lambda-calculator reduce)
