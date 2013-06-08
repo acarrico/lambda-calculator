@@ -1,6 +1,6 @@
 #!r6rs
 
-(library (reduce)
+(library (lambda-calculator reduce)
   (export
     reduce-norm
     reduce-applic)

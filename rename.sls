@@ -1,6 +1,6 @@
 #!r6rs
 
-(library (rename)
+(library (lambda-calculator rename)
   (export new-name)
   (import
     (rnrs base)

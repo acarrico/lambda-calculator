@@ -5,7 +5,7 @@
 ; This parser works, but it was written in a time crunch and it needs to be
 ; completely refactored (or rewritten). It is really terrible Scheme code.
 
-(library (parse)
+(library (lambda-calculator parse)
   (export parse)
   (import
     (rnrs base)

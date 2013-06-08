@@ -1,6 +1,6 @@
 #!r6rs
 
-(library (set)
+(library (lambda-calculator set)
   (export
     empty
     make-set

@@ -1,6 +1,6 @@
 #!r6rs
 
-(library (ast)
+(library (lambda-calculator ast)
   (export
     make-var var? name
     make-abst abst? param body

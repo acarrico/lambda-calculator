@@ -1,6 +1,6 @@
 #!r6rs
 
-(library (tokenize)
+(library (lambda-calculator tokenize)
   (export tokenize)
   (import
     (rnrs base)

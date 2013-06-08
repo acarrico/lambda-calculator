@@ -1,6 +1,6 @@
 #!r6rs
 
-(library (fail)
+(library (lambda-calculator fail)
   (export fail)
   (import
     (rnrs base)

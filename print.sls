@@ -1,6 +1,6 @@
 #!r6rs
 
-(library (print)
+(library (lambda-calculator print)
   (export print)
   (import
     (rnrs base)
