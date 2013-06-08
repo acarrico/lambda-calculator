@@ -1,3 +1,5 @@
+#!r6rs
+
 (library (rename)
   (export new-name)
   (import
