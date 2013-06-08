@@ -1,3 +1,5 @@
+#!r6rs
+
 (library (ast)
   (export
     make-var var? name

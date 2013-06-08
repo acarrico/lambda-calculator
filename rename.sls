@@ -1,8 +1,10 @@
+#!r6rs
+
 (library (rename)
   (export new-name)
   (import
     (rnrs base)
-    (set))
+    (lambda-calculator set))
 
   (define low-char #\a)
   (define hi-char #\z)

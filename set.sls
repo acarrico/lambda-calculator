@@ -1,3 +1,5 @@
+#!r6rs
+
 (library (set)
   (export
     empty

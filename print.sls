@@ -1,8 +1,10 @@
+#!r6rs
+
 (library (print)
   (export print)
   (import
     (rnrs base)
-    (ast))
+    (lambda-calculator ast))
 
   (define (parenthesize str)
     (string-append "(" str ")"))

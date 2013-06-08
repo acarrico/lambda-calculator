@@ -1,3 +1,5 @@
+#!r6rs
+
 (library (fail)
   (export fail)
   (import

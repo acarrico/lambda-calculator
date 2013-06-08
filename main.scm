@@ -1,8 +1,14 @@
+#!r6rs
+
 (import
-  (tokenize)
-  (parse)
-  (reduce)
-  (print))
+  (rnrs io simple)
+  (rnrs io ports)
+  (rnrs base)
+  (rnrs programs)
+  (lambda-calculator tokenize)
+  (lambda-calculator parse)
+  (lambda-calculator reduce)
+  (lambda-calculator print))
 
 (display
   (print
